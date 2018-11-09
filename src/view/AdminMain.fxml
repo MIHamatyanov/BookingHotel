@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+
+<TabPane fx:id="tabPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="744.0" prefWidth="1000.0" style="-fx-background-color: #f4f4f4;" stylesheets="@../styles/AdminMainStyle.css" tabClosingPolicy="UNAVAILABLE" tabMaxHeight="372.0" tabMaxWidth="372.0" tabMinWidth="150.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AdminMainController">
+  <tabs>
+    <Tab fx:id="newOrdersTab" text="Новые бронирования" />
+    <Tab fx:id="currentOrdersTab" text="Текущие бронирования" />
+      <Tab fx:id="allRoomsTab" text="Список номеров" />
+  </tabs>
+</TabPane>

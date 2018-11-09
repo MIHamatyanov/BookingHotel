@@ -1,0 +1,20 @@
+.button {
+    -fx-pref-width: 154;
+    -fx-pref-height: 42;
+    -fx-text-fill: #ffffff;
+    -fx-font-family: Verdana;
+    -fx-font-size: 14;
+    -fx-background-radius: 0;
+}
+
+#cancel {
+    -fx-background-color: #9fafbd;
+}
+
+#accept {
+    -fx-background-color: #0075d6;
+}
+
+.hyperlink {
+    -fx-border-width: 0;
+}

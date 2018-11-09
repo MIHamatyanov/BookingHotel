@@ -1,0 +1,20 @@
+#logPane {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #b3b3b3;
+    -fx-border-width: 0.8;
+}
+
+.button {
+    -fx-background-radius: 0;
+    -fx-text-fill: #ffffff;
+    -fx-font-family: Verdana;
+    -fx-font-size: 14;
+}
+
+#accept {
+    -fx-background-color: #0075d6;
+}
+
+#cancel {
+    -fx-background-color: #9fafbd;
+}

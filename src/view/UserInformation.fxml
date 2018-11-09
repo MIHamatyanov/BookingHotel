@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="744.0" prefWidth="1000.0" style="-fx-background-color: #f4f4f4;" stylesheets="@../styles/UserInformationStyle.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.UserInformationController">
+   <children>
+      <AnchorPane prefHeight="10.0" prefWidth="1000.0" style="-fx-background-color: #0075d6;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      <HBox alignment="TOP_CENTER" layoutY="10.0" prefHeight="70.0" prefWidth="1000.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="10.0">
+         <children>
+            <Label text="Информация о госте">
+               <font>
+                  <Font name="Verdana Bold" size="30.0" />
+               </font>
+               <HBox.margin>
+                  <Insets right="500.0" top="24.0" />
+               </HBox.margin>
+            </Label>
+         </children>
+      </HBox>
+      <HBox alignment="CENTER" layoutY="89.0" prefHeight="578.0" prefWidth="1000.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="90.0">
+         <children>
+            <AnchorPane prefHeight="501.0" prefWidth="886.0">
+               <children>
+                  <RadioButton fx:id="cash" layoutX="195.0" layoutY="315.0" mnemonicParsing="false" onAction="#cashSelected" text="Оплата при заселении">
+                     <font>
+                        <Font name="Verdana" size="13.0" />
+                     </font>
+                     <toggleGroup>
+                        <ToggleGroup fx:id="payInfo" />
+                     </toggleGroup>
+                  </RadioButton>
+                  <Label layoutX="18.0" layoutY="24.0" text="Имя">
+                     <font>
+                        <Font name="Verdana" size="15.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="userNameField" layoutX="18.0" layoutY="50.0" onKeyPressed="#updateFields" prefHeight="50.0" prefWidth="368.0" />
+                  <Label layoutX="500.0" layoutY="24.0" text="Фамилия">
+                     <font>
+                        <Font name="Verdana" size="15.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="userSurnameField" layoutX="483.0" layoutY="50.0" onKeyPressed="#updateFields" prefHeight="50.0" prefWidth="368.0" AnchorPane.rightAnchor="18.0" />
+                  <Label layoutX="18.0" layoutY="142.0" text="Адрес электронной почты">
+                     <font>
+                        <Font name="Verdana" size="15.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="userEmailField" layoutX="18.0" layoutY="168.0" onKeyPressed="#updateFields" prefHeight="50.0" prefWidth="368.0" />
+                  <Label layoutX="500.0" layoutY="142.0" text="Номер телефона">
+                     <font>
+                        <Font name="Verdana" size="15.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="userPhoneField" layoutX="500.0" layoutY="168.0" onKeyPressed="#updateFields" prefHeight="50.0" prefWidth="368.0" />
+                  <Label layoutX="13.0" layoutY="267.0" text="Информация об оплате">
+                     <font>
+                        <Font name="Verdana Bold" size="25.0" />
+                     </font></Label>
+                  <AnchorPane fx:id="cardInfoPane" layoutX="18.0" layoutY="360.0">
+                     <children>
+                        <Label text="Номер карты">
+                           <font>
+                              <Font name="Verdana" size="15.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="cardNumber" layoutY="26.0" onKeyPressed="#updateFields" prefHeight="50.0" prefWidth="368.0" />
+                        <Label layoutX="482.0" text="Владелец карты">
+                           <font>
+                              <Font name="Verdana" size="15.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="cardOwner" layoutX="482.0" layoutY="26.0" onKeyPressed="#updateFields" prefHeight="50.0" prefWidth="368.0" />
+                        <Label layoutY="118.0" text="Дата окончания действия">
+                           <font>
+                              <Font name="Verdana" size="15.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="cardEndDate" layoutY="144.0" onKeyPressed="#updateFields" prefHeight="50.0" prefWidth="368.0" />
+                        <Label layoutX="482.0" layoutY="118.0" text="CVV / CVC">
+                           <font>
+                              <Font name="Verdana" size="15.0" />
+                           </font>
+                        </Label>
+                        <PasswordField fx:id="cardCVV" layoutX="482.0" layoutY="144.0" onKeyPressed="#updateFields" prefHeight="50.0" prefWidth="368.0" />
+                     </children>
+                  </AnchorPane>
+                  <RadioButton fx:id="bankCard" layoutX="14.0" layoutY="315.0" mnemonicParsing="false" onAction="#bankCardSelected" selected="true" text="Банковской картой" toggleGroup="$payInfo">
+                     <font>
+                        <Font name="Verdana" size="13.0" />
+                     </font>
+                  </RadioButton>
+               </children>
+            </AnchorPane>
+         </children>
+      </HBox>
+      <HBox alignment="CENTER" layoutX="231.0" layoutY="678.0" prefHeight="81.0" prefWidth="1000.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <children>
+            <AnchorPane prefWidth="900.0">
+               <children>
+                  <Button id="accept" fx:id="acceptButton" layoutX="502.0" layoutY="10.0" mnemonicParsing="false" onAction="#acceptAction" prefHeight="50.0" prefWidth="171.0" text="Забронировать" />
+                  <Button id="cancel" fx:id="cancelButton" layoutX="710.0" layoutY="10.0" mnemonicParsing="false" onAction="#cancelAction" prefHeight="50.0" prefWidth="171.0" text="Отменить" />
+                  <Label fx:id="errorLabel" layoutX="212.0" layoutY="35.0" prefHeight="18.0" prefWidth="203.0" text="*Неверно заполнены поля" textFill="RED">
+                     <font>
+                        <Font name="Verdana" size="12.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>

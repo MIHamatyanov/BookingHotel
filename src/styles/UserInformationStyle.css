@@ -1,0 +1,27 @@
+.button {
+    -fx-pref-width: 171;
+    -fx-pref-height: 50;
+    -fx-background-radius: 0;
+    -fx-font-family: Verdana;
+    -fx-font-size: 14;
+    -fx-text-fill: #ffffff;
+}
+
+#cancel {
+    -fx-background-color: #9fafbd;
+}
+
+#accept {
+    -fx-background-color: #0075d6;
+}
+
+.text-field {
+    -fx-font-family: Verdana;
+    -fx-font-size: 14;
+}
+
+.radio-button .radio {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #b1b1b1;
+    -fx-border-radius: 10;
+}

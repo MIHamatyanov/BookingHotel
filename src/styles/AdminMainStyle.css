@@ -1,0 +1,104 @@
+.column-header-background{
+    -fx-max-height: 0;
+    -fx-pref-height: 0;
+    -fx-min-height: 0;
+}
+
+.table-view {
+    -fx-box-border : transparent;
+}
+
+.table-row-cell {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #f4f4f4;
+    -fx-border-width: 10;
+    -fx-min-height: 75;
+    -fx-text-alignment: CENTER;
+}
+
+.table-cell {
+    -fx-alignment: CENTER;
+    -fx-font-family: Verdana;
+    -fx-font-size: 14;
+}
+
+.table-column {
+    -fx-border-width: 0;
+}
+
+.table-row-cell:empty{
+    -fx-background-color: #f4f4f4;
+}
+
+.table-row-cell:selected{
+    -fx-background-color: rgba(0, 117, 214, 0.30);
+}
+
+.button {
+    -fx-font-size: 14;
+    -fx-font-family: Verdana;
+    -fx-text-fill: #ffffff;
+    -fx-background-radius: 0;
+}
+
+#accept {
+    -fx-background-color: #0075d6;
+}
+
+#cancel {
+    -fx-background-color: #9fafbd;
+}
+
+.split-pane {
+    -fx-box-border: transparent;
+}
+.scroll-bar:horizontal,
+.scroll-bar:horizontal .increment-arrow,
+.scroll-bar:horizontal .decrement-arrow,
+.scroll-bar:horizontal .track{
+    -fx-pref-width:0;
+    -fx-pref-height:0;
+}
+
+.scroll-bar:vertical {
+    -fx-background-color: #f4f4f4;
+}
+
+.scroll-bar:vertical .thumb {
+    -fx-background-color: #eaeaea;
+}
+
+.scroll-bar:vertical .increment-arrow,
+.scroll-bar:vertical .decrement-arrow {
+    -fx-background-color: #cacaca;
+}
+
+.tab-pane .tab-header-area .tab-header-background {
+    -fx-background-color: #0075d6;
+}
+
+.tab-pane:top *.tab-header-area {
+    -fx-background-insets: 0, 0 0 1 0;
+}
+
+.tab-pane .tab {
+    -fx-background-insets: 0 1 0 1, 0, 0;
+    -fx-background-radius: 0;
+    -fx-background-color: #0075d6;
+}
+
+.tab-pane .tab:selected{
+    -fx-background-color: #f4f4f4;
+}
+
+.tab .tab-label {
+    -fx-alignment: CENTER;
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 12;
+    -fx-font-family: Verdana;
+}
+
+.tab:selected .tab-label{
+    -fx-text-fill: #000000;
+}
+

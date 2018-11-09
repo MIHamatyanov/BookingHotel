@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="744.0" prefWidth="1000.0" style="-fx-background-color: #f4f4f4;" stylesheets="@../styles/AdminMainStyle.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AdminMainAllRoomsController">
+   <children>
+      <SplitPane dividerPositions="0.29797979797979796" layoutX="10.0" layoutY="10.0" prefHeight="716.0" prefWidth="1000.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="0.0">
+         <items>
+            <AnchorPane minHeight="0.0" minWidth="450.0" prefHeight="714.0" prefWidth="500.0" style="-fx-background-color: #f4f4f4;">
+               <children>
+                  <Label layoutX="14.0" layoutY="43.0" text="Список номеров">
+                     <font>
+                        <Font name="Verdana Bold" size="30.0" />
+                     </font>
+                  </Label>
+                  <TableView fx:id="allRoomsTable" focusTraversable="false" layoutY="102.0" prefHeight="200.0" prefWidth="400.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
+                     <columns>
+                        <TableColumn fx:id="roomNumberCol" prefWidth="75.0" text="Номер" />
+                        <TableColumn fx:id="roomRateCol" prefWidth="75.0" text="Дата заезда" />
+                        <TableColumn fx:id="roomCostCol" prefWidth="75.0" text="Дата выезда" />
+                     </columns>
+                     <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                     </columnResizePolicy>
+                  </TableView>
+               </children>
+            </AnchorPane>
+            <AnchorPane id="orderInfo" fx:id="roomInfoPane" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" style="-fx-background-color: #f4f4f4;">
+               <children>
+                  <Label layoutX="23.0" layoutY="46.0" text="Информация о номере">
+                     <font>
+                        <Font name="Verdana Bold" size="25.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="23.0" layoutY="113.0" text="Номер:">
+                     <font>
+                        <Font name="Verdana Bold" size="16.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="23.0" layoutY="160.0" text="Рейтинг:">
+                     <font>
+                        <Font name="Verdana Bold" size="16.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="23.0" layoutY="207.0" text="Цена:">
+                     <font>
+                        <Font name="Verdana Bold" size="16.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="23.0" layoutY="304.0" text="Текущий статус:">
+                     <font>
+                        <Font name="Verdana Bold" size="16.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="allRoomsNumberLabel" layoutX="109.0" layoutY="113.0" text="Label">
+                     <font>
+                        <Font name="Verdana" size="16.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="allRoomsRateLabel" layoutX="125.0" layoutY="160.0" text="Label">
+                     <font>
+                        <Font name="Verdana" size="16.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="allRoomsCostLabel" layoutX="96.0" layoutY="207.0" text="Label">
+                     <font>
+                        <Font name="Verdana" size="16.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="23.0" layoutY="253.0" text="Вместительность:">
+                     <font>
+                        <Font name="Verdana Bold" size="16.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="guestsNumberLabel" layoutX="206.0" layoutY="253.0" text="Label">
+                     <font>
+                        <Font name="Verdana" size="16.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="allRoomsStatus" layoutX="188.0" layoutY="304.0" text="Label">
+                     <font>
+                        <Font name="Verdana" size="16.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+         </items>
+      </SplitPane>
+   </children>
+</AnchorPane>
