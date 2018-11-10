@@ -1,5 +1,7 @@
 package controllers;
 
+import hotelDAO.OrderDAO;
+import hotelDAO.OrdersRepository;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,10 +15,9 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import objects.Order;
 
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class UserInformationController implements Initializable {
@@ -56,6 +57,7 @@ public class UserInformationController implements Initializable {
 
     private boolean isBankCard = true;
     private Order orderInfo;
+    private OrderDAO DBorders = new OrdersRepository();
 
     void setOrderInfo(Order orderInfo) {
         this.orderInfo = orderInfo;
@@ -112,10 +114,9 @@ public class UserInformationController implements Initializable {
                 orderInfo.setPaymentMethod("оплата при заселении");
             }
 
-            File file = new File("src/res/newOrders.txt");
-            try (FileWriter writer = new FileWriter(file, true)) {
-                writer.append(orderInfo.toString() + "\n");
-            } catch (IOException e) {
+            try {
+                DBorders.add(orderInfo);
+            } catch (SQLException e) {
                 e.printStackTrace();
             }
 

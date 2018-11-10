@@ -1,7 +1,9 @@
 package controllers;
 
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
+import hotelDAO.OrderDAO;
+import hotelDAO.OrdersRepository;
+import hotelDAO.RoomDAO;
+import hotelDAO.RoomsRepository;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -16,13 +18,14 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import objects.Order;
+import objects.Room;
 
 import java.io.*;
 import java.net.URL;
+import java.sql.SQLException;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class UserMainController implements Initializable {
@@ -53,6 +56,8 @@ public class UserMainController implements Initializable {
     private ComboBox<String> guestNumber;
 
     private Order orderInfo;
+    private RoomDAO DBrooms = new RoomsRepository();
+    private OrderDAO DBorders = new OrdersRepository();
 
     void setOrderInfo(Order orderInfo) {
         this.orderInfo = orderInfo;
@@ -150,52 +155,12 @@ public class UserMainController implements Initializable {
     }
 
     private void initData() {
-        String line;
-        File file = new File("src/res/roomsBroned.txt");
-        ArrayList<String> bronedRooms = new ArrayList<>();
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)))){
-            while ((line = reader.readLine()) != null) {
-                bronedRooms.add(line);
+        try {
+            List<Room> arrayListRooms = DBrooms.getByCapacity(guestNumber.getValue().split(" ")[0], entryDate.getValue(), exitDate.getValue());
+            for (Room room : arrayListRooms) {
+                rooms.add(new TableRow(room.getRoomNumber(), room.getRoomRate(), room.getRoomCost()));
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        file = new File("src/res/newOrders.txt");
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)))) {
-            while ((line = reader.readLine()) != null) {
-                bronedRooms.add(line);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        file = new File("src/res/roomsInfo.txt");
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)))){
-            while ((line = reader.readLine()) != null) {
-                boolean flag = true;
-                String[] data = line.split("\\|");
-                for (String rn : bronedRooms) {
-                    String[] broned = rn.split("\\|");
-                    if (broned[0].equals(data[0])) {
-                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-                        LocalDate bronedEntry = LocalDate.parse(broned[1], formatter);
-                        LocalDate bronedExit = LocalDate.parse(broned[2], formatter);
-
-                        if ((!(entryDate.getValue().isBefore(bronedEntry) && exitDate.getValue().isBefore(bronedEntry))) && !(entryDate.getValue().isAfter(bronedExit) && exitDate.getValue().isAfter(bronedExit))) {
-                            flag = false;
-                        }
-                    }
-
-                    if (!data[3].equals(guestNumber.getValue().split(" ")[0])) {
-                        flag = false;
-                    }
-                }
-                if (flag) {
-                    rooms.add(new TableRow(line));
-                }
-            }
-        } catch (IOException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
@@ -229,9 +194,8 @@ public class UserMainController implements Initializable {
                     LocalDate roomEntryDate = entryDate.getValue();
                     LocalDate roomExitDate = exitDate.getValue();
                     String roomGuestsNumber = guestNumber.getValue();
-                    Integer roomCost = Integer.parseInt(info.getRoomCost().split(" ")[1]);
-                    String roomRate = info.getRoomRate();
-                    orderInfo = new Order(roomNumber, roomEntryDate, roomExitDate, roomGuestsNumber, roomCost, roomRate);
+                    Integer totalSum = Integer.parseInt(info.getRoomCost().split(" ")[1]) * (int)ChronoUnit.DAYS.between(roomEntryDate, roomExitDate);
+                    orderInfo = new Order(roomNumber, roomEntryDate, roomExitDate, roomGuestsNumber, totalSum);
                     controller.setInfo(orderInfo);
                     stage.setScene(new Scene(root, stage.getScene().getWidth(), stage.getScene().getHeight()));
                     stage.show();
@@ -243,65 +207,41 @@ public class UserMainController implements Initializable {
     }
 
     public class TableRow {
-        private final SimpleStringProperty roomNumber;
-        private final SimpleStringProperty roomRate;
-        private final SimpleStringProperty roomCost;
-        private final SimpleObjectProperty<AcceptButton> roomChoose;
+        private final String roomNumber;
+        private final String roomRate;
+        private final String roomCost;
+        private final AcceptButton roomChoose;
 
         public TableRow(String line) {
             String[] data = line.split("\\|");
-            this.roomNumber = new SimpleStringProperty(data[0]);
-            this.roomRate = new SimpleStringProperty("Рейтинг: " + data[1]);
-            this.roomCost = new SimpleStringProperty("Цена: " + data[2]);
-            roomChoose = new SimpleObjectProperty<>(new AcceptButton(this));
+            this.roomNumber = data[0];
+            this.roomRate = "Рейтинг: " + data[1];
+            this.roomCost = "Цена: " + data[2];
+            roomChoose = new AcceptButton(this);
         }
+
+        public TableRow(String roomNumber, String roomRate, String roomCost) {
+            this.roomNumber = roomNumber;
+            this.roomRate = roomRate;
+            this.roomCost = roomCost;
+            roomChoose = new AcceptButton(this);
+        }
+
 
         public String getRoomNumber() {
-            return roomNumber.get();
-        }
-
-        public SimpleStringProperty roomNumberProperty() {
             return roomNumber;
         }
 
-        public void setRoomNumber(String roomNumber) {
-            this.roomNumber.set(roomNumber);
-        }
-
         public String getRoomRate() {
-            return roomRate.get();
-        }
-
-        public SimpleStringProperty roomRateProperty() {
             return roomRate;
         }
 
-        public void setRoomRate(String roomRate) {
-            this.roomRate.set(roomRate);
-        }
-
         public String getRoomCost() {
-            return roomCost.get();
-        }
-
-        public SimpleStringProperty roomCostProperty() {
             return roomCost;
         }
 
-        public void setRoomCost(String roomCost) {
-            this.roomCost.set(roomCost);
-        }
-
         public AcceptButton getRoomChoose() {
-            return roomChoose.get();
-        }
-
-        public SimpleObjectProperty<AcceptButton> roomChooseProperty() {
             return roomChoose;
-        }
-
-        public void setRoomChoose(AcceptButton roomChoose) {
-            this.roomChoose.set(roomChoose);
         }
     }
 }

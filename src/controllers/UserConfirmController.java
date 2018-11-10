@@ -57,10 +57,10 @@ public class UserConfirmController implements Initializable {
         entryDate.setText(dateToText(orderInfo.getEntryDate()));
         exitDate.setText(dateToText(orderInfo.getExitDate()));
         guestNumber.setText(orderInfo.getGuestsNumber());
-        totalSum.setText(ChronoUnit.DAYS.between(orderInfo.getEntryDate(), orderInfo.getExitDate())* orderInfo.getRoomCost() + " руб.");
+        totalSum.setText(ChronoUnit.DAYS.between(orderInfo.getEntryDate(), orderInfo.getExitDate())* orderInfo.getTotalSum() + " руб.");
         residenceDays.setText(Util.resDays(orderInfo.getEntryDate()) + " - " + Util.resDays(orderInfo.getExitDate()));
-        residenceTotalSum.setText(ChronoUnit.DAYS.between(orderInfo.getEntryDate(), orderInfo.getExitDate())* orderInfo.getRoomCost() + " руб (" + orderInfo.getRoomCost() + " руб/сутки)");
-        File file = new File("src/res/"+ orderInfo.getRoomNumber()+".jpg");
+        residenceTotalSum.setText(orderInfo.getTotalSum() + " руб (" + orderInfo.getTotalSum()/(ChronoUnit.DAYS.between(orderInfo.getEntryDate(), orderInfo.getExitDate())) + " руб/сутки)");
+        File file = new File("src/styles/"+ orderInfo.getRoomNumber()+".jpg");
         Image image = new Image(file.toURI().toString());
         roomImage.setImage(image);
     }

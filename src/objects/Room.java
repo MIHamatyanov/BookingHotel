@@ -9,9 +9,16 @@ public class Room {
     public Room(String line) {
         String[] data = line.split("\\|");
         this.roomNumber = data[0];
-        this.roomRate = "Рейтинг: " + data[1];
-        this.roomCost = "Цена: " + data[2];
+        this.roomRate = data[1];
+        this.roomCost = data[2];
         this.guestsNumber = data[3];
+    }
+
+    public Room(String roomNumber, String roomRate, String roomCost, String guestsNumber) {
+        this.roomNumber = roomNumber;
+        this.roomRate = roomRate;
+        this.roomCost = roomCost;
+        this.guestsNumber = guestsNumber;
     }
 
     public String getRoomNumber() {
@@ -23,7 +30,7 @@ public class Room {
     }
 
     public String getRoomRate() {
-        return roomRate;
+        return "Рейтинг: " + roomRate;
     }
 
     public void setRoomRate(String roomRate) {
@@ -31,7 +38,7 @@ public class Room {
     }
 
     public String getRoomCost() {
-        return roomCost;
+        return "Цена: " + roomCost;
     }
 
     public void setRoomCost(String roomCost) {

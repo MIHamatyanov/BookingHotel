@@ -8,8 +8,7 @@ public class Order {
     private LocalDate entryDate;
     private LocalDate exitDate;
     private String guestsNumber;
-    private Integer roomCost;
-    private String rate;
+    private Integer totalSum;
     private String surname;
     private String name;
     private String email;
@@ -17,13 +16,12 @@ public class Order {
     private String paymentMethod;
     private String cardInfo;
 
-    public Order(String roomNumber, LocalDate entryDate, LocalDate exitDate, String guestsNumber, Integer roomCost, String rate) {
+    public Order(String roomNumber, LocalDate entryDate, LocalDate exitDate, String guestsNumber, Integer totalSum) {
         this.roomNumber = roomNumber;
         this.entryDate = entryDate;
         this.exitDate = exitDate;
         this.guestsNumber = guestsNumber;
-        this.roomCost = roomCost;
-        this.rate = rate;
+        this.totalSum = totalSum;
         this.surname = "";
         this.name = "";
         this.email = "";
@@ -32,13 +30,27 @@ public class Order {
         this.cardInfo = "-";
     }
 
+    public Order(String roomNumber, LocalDate entryDate, LocalDate exitDate, Integer totalSum, String surname, String name, String email, String phone, String paymentMethod) {
+        this.roomNumber = roomNumber;
+        this.entryDate = entryDate;
+        this.exitDate = exitDate;
+        this.totalSum = totalSum;
+        this.surname = surname;
+        this.name = name;
+        this.email = email;
+        this.phone = phone;
+        this.paymentMethod = paymentMethod;
+        this.cardInfo = "";
+        this.guestsNumber = "";
+    }
+
     public Order(String line) {
         String[] data = line.split("\\|");
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         this.roomNumber = data[0];
         this.entryDate = LocalDate.parse(data[1], formatter);
         this.exitDate = LocalDate.parse(data[2], formatter);
-        this.roomCost = Integer.parseInt(data[3]);
+        this.totalSum = Integer.parseInt(data[3]);
         this.surname = data[4];
         this.name = data[5];
         this.email = data[6];
@@ -47,10 +59,12 @@ public class Order {
         this.cardInfo = data[9];
     }
 
+
+
     @Override
     public String toString() {
         String separator = "|";
-        return roomNumber + separator + entryDate + separator + exitDate + separator + roomCost + separator + surname + separator + name + separator + email + separator + phone + separator + paymentMethod + separator + cardInfo;
+        return roomNumber + separator + entryDate + separator + exitDate + separator + totalSum + separator + surname + separator + name + separator + email + separator + phone + separator + paymentMethod + separator + cardInfo;
     }
 
     public String getRoomNumber() {
@@ -85,20 +99,12 @@ public class Order {
         this.guestsNumber = guestsNumber;
     }
 
-    public Integer getRoomCost() {
-        return roomCost;
+    public Integer getTotalSum() {
+        return totalSum;
     }
 
-    public void setRoomCost(Integer roomCost) {
-        this.roomCost = roomCost;
-    }
-
-    public String getRate() {
-        return rate;
-    }
-
-    public void setRate(String rate) {
-        this.rate = rate;
+    public void setTotalSum(Integer totalSum) {
+        this.totalSum = totalSum;
     }
 
     public String getSurname() {

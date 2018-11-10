@@ -1,5 +1,9 @@
 package controllers;
 
+import hotelDAO.OrderDAO;
+import hotelDAO.OrdersRepository;
+import hotelDAO.RoomDAO;
+import hotelDAO.RoomsRepository;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -14,6 +18,7 @@ import objects.Room;
 
 import java.io.*;
 import java.net.URL;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 
@@ -52,6 +57,9 @@ public class AdminMainAllRoomsController implements Initializable {
     @FXML
     private Label allRoomsStatus;
 
+    private RoomDAO DBrooms = new RoomsRepository();
+    private OrderDAO DBorders = new OrdersRepository();
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         roomInfoPane.setOpacity(0);
@@ -67,8 +75,8 @@ public class AdminMainAllRoomsController implements Initializable {
     private void showRoomsInfo(Room room) {
         if (room != null) {
             allRoomsNumberLabel.setText(room.getRoomNumber());
-            allRoomsRateLabel.setText(room.getRoomRate());
-            allRoomsCostLabel.setText(room.getRoomCost());
+            allRoomsRateLabel.setText(room.getRoomRate().split(" ")[1]);
+            allRoomsCostLabel.setText(room.getRoomCost().split(" ")[1]);
             guestsNumberLabel.setText(room.getGuestsNumber());
             allRoomsStatus.setText("Свободен");
             LocalDate today = LocalDate.now();
@@ -86,13 +94,10 @@ public class AdminMainAllRoomsController implements Initializable {
 
     private void initDataCurrent() {
         ordersCurrent.clear();
-        String line;
-        File file = new File("src/res/roomsBroned.txt");
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)))) {
-            while ((line = reader.readLine()) != null) {
-                ordersCurrent.add(new Order(line));
-            }
-        } catch (IOException e) {
+
+        try {
+            ordersCurrent.addAll(DBorders.getByStatus("1"));
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
@@ -100,13 +105,10 @@ public class AdminMainAllRoomsController implements Initializable {
     void initData() {
         allRooms.clear();
         initDataCurrent();
-        String line;
-        File file = new File("src/res/roomsInfo.txt");
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)))) {
-            while ((line = reader.readLine()) != null) {
-                allRooms.add(new Room(line));
-            }
-        } catch (IOException e) {
+
+        try {
+            allRooms.addAll(DBrooms.getAll());
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }

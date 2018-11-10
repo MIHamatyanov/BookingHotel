@@ -1,11 +1,12 @@
 package controllers;
 
+import hotelDAO.OrderDAO;
+import hotelDAO.OrdersRepository;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -16,6 +17,7 @@ import objects.Util;
 
 import java.io.*;
 import java.net.URL;
+import java.sql.SQLException;
 import java.time.temporal.ChronoUnit;
 import java.util.ResourceBundle;
 
@@ -59,6 +61,8 @@ public class AdminMainNewOrdersController implements Initializable {
     @FXML
     private Label costLabel;
 
+    private OrderDAO DBorders = new OrdersRepository();
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         orderInfoPane.setOpacity(0);
@@ -72,16 +76,13 @@ public class AdminMainNewOrdersController implements Initializable {
 
     void initData() {
         newOrders.clear();
-        String line;
-        File file = new File("src/res/newOrders.txt");
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)))) {
-            while ((line = reader.readLine()) != null) {
-                Order order = new Order(line);
-                newOrders.add(order);
-            }
-        } catch (IOException e) {
+
+        try {
+            newOrders.addAll(DBorders.getByStatus("0"));
+        } catch (SQLException e) {
             e.printStackTrace();
         }
+
     }
 
     private void showOrderInfo(Order order) {
@@ -92,7 +93,7 @@ public class AdminMainNewOrdersController implements Initializable {
             paymentMethodLabel.setText(order.getPaymentMethod());
             roomNumberLabel.setText(order.getRoomNumber());
             datesLabel.setText(Util.resDays(order.getEntryDate()) + " - " + Util.resDays(order.getExitDate()));
-            costLabel.setText(ChronoUnit.DAYS.between(order.getEntryDate(), order.getExitDate()) * order.getRoomCost() + " руб.");
+            costLabel.setText(order.getTotalSum() + " руб.");
             orderInfoPane.setOpacity(1);
         } else {
             orderInfoPane.setOpacity(0);
@@ -101,23 +102,24 @@ public class AdminMainNewOrdersController implements Initializable {
 
     @FXML
     void acceptAction(ActionEvent event) {
-        File file = new File("src/res/roomsBroned.txt");
-        try (FileWriter writer = new FileWriter(file, true)) {
-            writer.append(ordersTable.getSelectionModel().getSelectedItem().toString()).append("\n");
+
+        try {
+            DBorders.updateStatus(ordersTable.getSelectionModel().getSelectedItem().getRoomNumber(), "1");
             newOrders.remove(ordersTable.getSelectionModel().getSelectedItem());
-        } catch (IOException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
-
-        file = new File("src/res/newOrders.txt");
-        Util.rewriteData(newOrders, file);
     }
 
     @FXML
     void cancelAction(ActionEvent event) {
-        newOrders.remove(ordersTable.getSelectionModel().getSelectedItem());
-        File file = new File("src/res/newOrders.txt");
-        Util.rewriteData(newOrders, file);
+
+        try {
+            DBorders.delete(ordersTable.getSelectionModel().getSelectedItem().getRoomNumber());
+            newOrders.remove(ordersTable.getSelectionModel().getSelectedItem());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
 }

@@ -1,5 +1,7 @@
 package controllers;
 
+import hotelDAO.DataDAO;
+import hotelDAO.DataRepository;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -7,12 +9,12 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.*;
+import java.sql.SQLException;
 
 public class AdminLogInController {
 
@@ -21,6 +23,8 @@ public class AdminLogInController {
 
     @FXML
     private PasswordField passwordField;
+
+    private DataDAO DBdata = new DataRepository();
 
     @FXML
     void cancelAction(ActionEvent event) {
@@ -34,17 +38,10 @@ public class AdminLogInController {
         String login = loginField.getText();
         String password = passwordField.getText();
 
-        File file = new File("src/res/admins.txt");
-        String line;
         boolean flag = false;
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)))) {
-            while ((line = reader.readLine()) != null) {
-                String[] data = line.split(" ");
-                if (login.equals(data[0]) && password.equals(data[1])) {
-                    flag = true;
-                }
-            }
-        } catch (IOException e) {
+        try {
+            flag = DBdata.checkData(login, password);
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 
